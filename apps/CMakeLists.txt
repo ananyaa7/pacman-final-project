@@ -11,7 +11,6 @@ file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
 ci_make_app(
         APP_NAME    cinder-myapp
         CINDER_PATH ${CINDER_PATH}
-        SOURCES     ${SOURCE_LIST}
+        SOURCES     ${SOURCE_LIST} my_app.cc my_app.h cinder_app_main.cc
         LIBRARIES   mylibrary gflags sqlite-modern-cpp sqlite3
-        BLOCKS      Choreograph
 )
