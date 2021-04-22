@@ -11,7 +11,7 @@ file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
 
 
 ci_make_app(
-        APP_NAME final-project
+        APP_NAME     cinder-myapp
         CINDER_PATH  ${CINDER_PATH}
         SOURCES      ${SOURCE_LIST}
         INCLUDES     "${FinalProject_SOURCE_DIR}/include"

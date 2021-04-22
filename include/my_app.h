@@ -1,6 +1,4 @@
-
-#ifndef FINAL_PROJECT_ANANYAA7_MY_APP_H
-#define FINAL_PROJECT_ANANYAA7_MY_APP_H
+#pragma once
 
 #include <cinder/app/App.h>
 
