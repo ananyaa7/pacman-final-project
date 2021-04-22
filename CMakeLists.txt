@@ -51,7 +51,8 @@ get_filename_component(APP_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" ABSOLUTE)
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
 list(APPEND SOURCE_FILES    ${SOURCE_FILES}
-        src/my_app.cc)
+        src/my_app.cc
+        src/wall.cc)
 
 
 list(APPEND TEST_FILES ${TEST_FILES}
@@ -61,7 +62,7 @@ list(APPEND TEST_FILES ${TEST_FILES}
 ci_make_app(
         APP_NAME        Pacman
         CINDER_PATH     ${CINDER_PATH}
-        SOURCES apps/cinder_app_main.cc ${SOURCE_FILES}
+        SOURCES apps/cinder_app_main.cc ${SOURCE_FILES} src/wall.cc include/wall.h
         INCLUDES        include
 )
 
