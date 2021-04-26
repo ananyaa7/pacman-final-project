@@ -53,7 +53,8 @@ include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 list(APPEND SOURCE_FILES    ${SOURCE_FILES}
         src/my_app.cc
         src/wall.cc
-        src/snack.cc)
+        src/snack.cc
+        src/power_up.cc)
 
 
 list(APPEND TEST_FILES ${TEST_FILES}
@@ -63,7 +64,7 @@ list(APPEND TEST_FILES ${TEST_FILES}
 ci_make_app(
         APP_NAME        Pacman
         CINDER_PATH     ${CINDER_PATH}
-        SOURCES apps/cinder_app_main.cc ${SOURCE_FILES} src/wall.cc include/wall.h src/snack.cc include/snack.h
+        SOURCES apps/cinder_app_main.cc ${SOURCE_FILES} src/wall.cc include/wall.h src/snack.cc include/snack.h src/power_up.cc include/power_up.h
         INCLUDES        include
 )
 
