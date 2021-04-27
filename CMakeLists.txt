@@ -55,7 +55,8 @@ list(APPEND SOURCE_FILES    ${SOURCE_FILES}
         src/wall.cc
         src/snack.cc
         src/power_up.cc
-        src/map.cc)
+        src/map.cc
+        src/ghost.cc)
 
 
 list(APPEND TEST_FILES ${TEST_FILES}
@@ -65,7 +66,7 @@ list(APPEND TEST_FILES ${TEST_FILES}
 ci_make_app(
         APP_NAME        Pacman
         CINDER_PATH     ${CINDER_PATH}
-        SOURCES apps/cinder_app_main.cc ${SOURCE_FILES} src/wall.cc include/wall.h src/snack.cc include/snack.h src/power_up.cc include/power_up.h src/map.cc include/map.h
+        SOURCES apps/cinder_app_main.cc ${SOURCE_FILES} src/wall.cc include/wall.h src/snack.cc include/snack.h src/power_up.cc include/power_up.h src/map.cc include/map.h src/ghost.cc include/ghost.h
         INCLUDES        include
 )
 

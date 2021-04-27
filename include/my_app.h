@@ -2,20 +2,31 @@
 #ifndef FINAL_PROJECT_ANANYAA7_MY_APP_H
 #define FINAL_PROJECT_ANANYAA7_MY_APP_H
 
-#include <cinder/app/App.h>
+#pragma once
 
+#include "cinder/app/App.h"
+#include "cinder/app/RendererGl.h"
+#include "cinder/gl/gl.h"
+#include "pacman_engine.h"
+#include "ghost.h"
 
-namespace myapp {
+namespace PacmanGame {
 
-class MyApp : public cinder::app::App {
+class PacmanApp : public ci::app::App {
 public:
-  MyApp();
-  void setup() override;
-  void update() override;
+  PacmanApp();
+
   void draw() override;
-  void keyDown(cinder::app::KeyEvent) override;
+  void update() override;
+  void setup() override;
+  void keyDown(ci::app::KeyEvent event) override;
+
+private:
+  PacmanEngine pacman_engine_;
+  const std::string kMapPath = "map.txt";
 };
 
-}  // namespace myapp
+} // namespace PacmanGame
+
 
 #endif // FINAL_PROJECT_ANANYAA7_MY_APP_H
