@@ -55,6 +55,15 @@ public:
    */
   void DrawMap(const TimePoint& begin_time);
 
+private:
+  std::vector<std::vector<char>> map_tiles_;
+  glm::vec2 pacman_location_;
+  std::vector<Wall> walls_;
+  std::vector<Wall> temp_walls_;
+  std::vector<Snack> snacks_;
+  std::vector<PowerUp> power_ups_;
+  std::vector<glm::vec2> ghost_locations_;
+
   // This constant scales the size and placement of the walls
   const static int kScalingFactor = (int) kWindowWidth / 80;
   const int kLoopingFactor = kScalingFactor / 10;

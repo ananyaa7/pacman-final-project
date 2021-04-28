@@ -3,25 +3,11 @@
 
 #include "my_app.h"
 
-using cinder::app::App;
-using cinder::app::RendererGl;
+using PacmanGame::PacmanApp;
 
-
-namespace myapp {
-
-const int kSamples = 8;
-const int kWidth = 800;
-const int kHeight = 700;
-
-void SetUp(App::Settings* settings) {
-  settings->setWindowSize(kWidth, kHeight);
-  settings->setTitle("My CS 126 Application");
+void prepareSettings(PacmanApp::Settings* settings) {
+  settings->setResizable(false);
 }
 
-}  // namespace myapp
-
-
-// This is a macro that runs the application.
-CINDER_APP(myapp::MyApp,
-    RendererGl(RendererGl::Options().msaa(myapp::kSamples)),
-    myapp::SetUp)
+// This line is a macro that expands into an "int main()" function.
+CINDER_APP(PacmanApp, ci::app::RendererGl, prepareSettings);
