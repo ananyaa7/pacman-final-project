@@ -61,7 +61,7 @@ void PacmanEngine::DrawLives() const {
 
     // Draw's the number of lives as Pacman's to the screen
     ci::gl::color(ci::Color("yellow"));
-    glm::vec2 center = glm::vec2(Map::kWindowWidth * .85 + 95 * i,
+    glm::vec2 center = glm::vec2(Map::kWindowWidth * .85 + 85 * i,
                                  Map::kWindowHeight * .4);
     ci::gl::drawSolidCircle(center,pacman_.GetRadius() * 1.5);
 

@@ -193,7 +193,7 @@ void Ghost::Scatter(const std::vector<std::vector<char>>& map_tiles) {
   std::vector<Coordinates> path_to_corner = FindPathToTile(map_tiles, corner_coordinates);
 
   // If they are already there, just return and don't do anything
-  if (path_to_corner.size() == 1) {
+  if (path_to_corner.size() == 0) {
     return;
   }
 

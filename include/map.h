@@ -31,8 +31,8 @@ public:
   void DrawMap(const TimePoint& begin_time);
 
   // Constants for the GUI window size
-  const static size_t kWindowHeight = 650;
-  const static size_t kWindowWidth = 1400;
+  const static size_t kWindowHeight = 680;
+  const static size_t kWindowWidth = 1300;
 
   const std::vector<Wall> &GetWalls() const;
   std::vector<std::vector<char>> &GetMapTiles();

@@ -16,7 +16,7 @@ void PacmanApp::draw() {
     pacman_engine_.DrawGame();
     ci::gl::drawStringCentered(
         "Score: " + std::to_string(pacman_engine_.GetScore()),
-        glm::vec2(Map::kWindowWidth * .9, Map::kWindowHeight * .1),
+        glm::vec2(Map::kWindowWidth * .7, Map::kWindowHeight * .1),
         ci::Color("white"), ci::Font("Arial", 50));
 
   } else {

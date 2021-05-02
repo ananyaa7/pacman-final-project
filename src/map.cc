@@ -29,14 +29,14 @@ void Map::LoadInMap(const std::string &map) {
       glm::vec2 top_left = glm::vec2(scaled_column * kScalingFactor, scaled_row *
                                                                      kScalingFactor + kScalingFactor);
       glm::vec2 bottom_right = glm::vec2(scaled_column * kScalingFactor +
-                                         1.5 * kScalingFactor, scaled_row * kScalingFactor + 2.5 *
+                                         1.5* kScalingFactor, scaled_row * kScalingFactor + 2.5 *
                                                                                              kScalingFactor);
 
       // The reason for these 2s and 3s is because we are taking an
       // average so making them constants to prevent magic numbers didn't
       // make sense here
       glm::vec2 pos = glm::vec2((2 * (scaled_column * kScalingFactor) +
-                                 kScalingFactor) / 2, (2 * (scaled_row * kScalingFactor) + 3 *
+                                 kScalingFactor) / 2, (2 * (scaled_row * kScalingFactor) + 2 *
                                                                                            kScalingFactor) / 2);
 
       // Switch case statement for the current char on the line to determine
