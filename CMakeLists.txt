@@ -64,7 +64,8 @@ list(APPEND SOURCE_FILES    ${SOURCE_FILES}
 
 list(APPEND TEST_FILES ${TEST_FILES}
         tests/test_main.cc
-        tests/test_ghost.cc)
+        tests/test_ghost.cc
+        tests/test_pacman.cc)
 
 
 ci_make_app(
