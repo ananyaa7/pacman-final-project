@@ -5,7 +5,7 @@ namespace PacmanGame {
 Pacman::Pacman() {
   begin_time_ = std::chrono::system_clock::now();
   direction_ = LEFT;
-  radius_ = Map::kWindowHeight / 70;
+  radius_ = Map::kWindowHeight / 60;
   state_ = NORMAL;
 }
 
