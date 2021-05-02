@@ -130,13 +130,14 @@ void PacmanEngine::MovePacman(const std::string& direction) {
 
 void PacmanEngine::UpdateGame() {
 
-  // have to check if the game is over(no more snacks left)
+  // First check if the game is over (there are no more snacks)
   if (map_.GetSnacks().empty()) {
     game_state_ = WON;
     return;
   }
 
-  // have to check is the pacman is powered up
+  // Next check if Pacman is powered up, if so, check if it's been the power
+  // up duration yet
   UpdatePacmanState();
 
   for (Ghost& ghost : ghosts_) {
@@ -151,14 +152,14 @@ void PacmanEngine::UpdateGame() {
         pacman_coordinates_ = initial_pacman_coordinates_;
         lives_--;
 
-        // check if no more lives left
+        // If we have no more lives, the game state is over
         if (lives_ == 0) {
           game_state_ = END;
         }
         pacman_state_ = DEAD;
         ScatterGhosts();
 
-        // else we have eaten ghost
+        // We've eaten a ghost
       } else {
         score_ += 100;
         ghost.Respawn();
@@ -187,6 +188,11 @@ void PacmanEngine::UpdatePacmanState() {
   }
 }
 
+void PacmanEngine::ScatterGhosts() {
+  for (Ghost& ghost : ghosts_) {
+    ghost.SetState(Ghost::SCATTER);
+  }
+}
 
 bool PacmanEngine::HasDied(const Ghost& ghost) {
   if (pacman_coordinates_ == ghost.GetGhostCoordinates()) {
@@ -207,8 +213,6 @@ bool PacmanEngine::IsUpCollision() {
 }
 
 bool PacmanEngine::IsDownCollision() {
-
-  // Checks if there is a wall in the tile below Pacman
   Coordinates up = Coordinates(pacman_coordinates_.first + 1,
                                pacman_coordinates_.second);
   if (map_tiles_[up.first][up.second] == Map::kWall) {
@@ -218,8 +222,6 @@ bool PacmanEngine::IsDownCollision() {
 }
 
 bool PacmanEngine::IsLeftCollision() {
-
-  // Checks if there is a wall in the tile left to Pacman
   Coordinates left = Coordinates(pacman_coordinates_.first,
                                  pacman_coordinates_.second - 1);
   if (map_tiles_[left.first][left.second] == Map::kWall) {
@@ -229,8 +231,6 @@ bool PacmanEngine::IsLeftCollision() {
 }
 
 bool PacmanEngine::IsRightCollision() {
-
-  // Checks if there is a wall in the tile right to Pacman
   Coordinates right = Coordinates(pacman_coordinates_.first,
                                   pacman_coordinates_.second + 1);
   if (map_tiles_[right.first][right.second] == Map::kWall) {
@@ -245,9 +245,9 @@ bool PacmanEngine::HasEatenSnack() {
 
   for (size_t i = 0; i < all_snacks.size(); i++) {
 
-    // if the distance between pacman and snack is less
-    // than the sum of the two radii,then pacman has eaten it and
-    // we earse it
+    // Checks if the distance between Pacman and any given snack is less than
+    // the sum of the two radii. If they are, then Pacman has eaten it and we
+    // erase it from the vector of snacks
     if (glm::distance(all_snacks[i].GetPosition(), curr_pos) <=
         Snack::kRadius + pacman_.GetRadius()) {
       all_snacks.erase(all_snacks.begin() + i);

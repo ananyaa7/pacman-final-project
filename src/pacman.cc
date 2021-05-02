@@ -14,7 +14,7 @@ void Pacman::Draw() {
   ci::gl::drawSolidCircle(position_, radius_);
   ci::gl::color(ci::Color("black"));
 
-  // Gets the elapsed time of the program to draw the animation for
+  // Gets the elapsed time of the program to draw the biting animation for
   // Pacman
   auto end_time = std::chrono::system_clock::now();
   std::chrono::duration<double> duration = end_time - begin_time_;

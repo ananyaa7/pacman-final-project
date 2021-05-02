@@ -58,17 +58,19 @@ list(APPEND SOURCE_FILES    ${SOURCE_FILES}
         src/map.cc
         src/ghost.cc
         src/pacman.cc
-        src/pacman_engine.cc)
+        src/pacman_engine.cc
+        src/game_over.cc)
 
 
 list(APPEND TEST_FILES ${TEST_FILES}
-        )
+        tests/test_main.cc
+        tests/test_ghost.cc)
 
 
 ci_make_app(
         APP_NAME        Pacman
         CINDER_PATH     ${CINDER_PATH}
-        SOURCES apps/cinder_app_main.cc ${SOURCE_FILES} src/wall.cc include/wall.h src/snack.cc include/snack.h src/power_up.cc include/power_up.h src/map.cc include/map.h src/ghost.cc include/ghost.h src/pacman.cc include/pacman.h src/pacman_engine.cc include/pacman_engine.h
+        SOURCES apps/cinder_app_main.cc ${SOURCE_FILES} src/wall.cc include/wall.h src/snack.cc include/snack.h src/power_up.cc include/power_up.h src/map.cc include/map.h src/ghost.cc include/ghost.h src/pacman.cc include/pacman.h src/pacman_engine.cc include/pacman_engine.h src/game_over.cc include/game_over.h
         INCLUDES        include
 )
 

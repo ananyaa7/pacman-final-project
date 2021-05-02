@@ -2,6 +2,7 @@
 
 #include "cinder/gl/gl.h"
 #include "cinder/app/App.h"
+#include "cinder/gl/gl.h"
 #include "wall.h"
 #include "snack.h"
 #include "power_up.h"
@@ -10,37 +11,11 @@
 
 namespace PacmanGame {
 
-//Gets the time during the running of the apllication
+// Used to get the time while running the application
 typedef std::chrono::time_point<std::chrono::system_clock> TimePoint;
 
 class Map {
 public:
-  // Constants for the GUI window size
-  const static size_t kWindowHeight = 750;
-  const static size_t kWindowWidth = 1200;
-
-  //gets the constant wall tile
-  const std::vector<Wall> &GetWalls() const;
-  std::vector<std::vector<char>> &GetMapTiles();
-
-  //getters which get the snacks and powerups(not constant cause can be eaten)
-  std::vector<Snack> &GetSnacks();
-  std::vector<PowerUp> &GetPowerUps();
-
-  //getters for location of pacman,ghost and temp walls
-  const glm::vec2 &GetPacmanLocation() const;
-  const std::vector<glm::vec2> &GetGhostLocations() const;
-  const std::vector<Wall> &GetTempWalls() const;
-
-  const static char kWall = 'W';
-  const static char kBlinky = 'B';
-  const static char kInky = 'I';
-  const static char kClyde = 'C';
-  const static char kPacman = 'P';
-
-  /**
-   * Default constructor for Map class
-   */
   Map();
 
   /**
@@ -55,6 +30,29 @@ public:
    */
   void DrawMap(const TimePoint& begin_time);
 
+  // Constants for the GUI window size
+  const static size_t kWindowHeight = 750;
+  const static size_t kWindowWidth = 1400;
+
+  const std::vector<Wall> &GetWalls() const;
+  std::vector<std::vector<char>> &GetMapTiles();
+
+  // The only reason why these getters aren't constant is because we want to
+  // erase the snacks and power ups that Pacman has eaten
+  std::vector<Snack> &GetSnacks();
+  std::vector<PowerUp> &GetPowerUps();
+
+  const glm::vec2 &GetPacmanLocation() const;
+  const std::vector<glm::vec2> &GetGhostLocations() const;
+  const std::vector<Wall> &GetTempWalls() const;
+
+  // Made public for pacman engine and ghosts
+  const static char kWall = 'W';
+  const static char kBlinky = 'B';
+  const static char kInky = 'I';
+  const static char kClyde = 'C';
+  const static char kPacman = 'P';
+
 private:
   std::vector<std::vector<char>> map_tiles_;
   glm::vec2 pacman_location_;
@@ -65,8 +63,9 @@ private:
   std::vector<glm::vec2> ghost_locations_;
 
   // This constant scales the size and placement of the walls
-  const static int kScalingFactor = (int) kWindowWidth / 80;
+  const static int kScalingFactor = (int) kWindowWidth / 70;
   const int kLoopingFactor = kScalingFactor / 10;
+
 
   // These constants represent the chars used for walls, snacks etc. from the
   // map
@@ -74,11 +73,11 @@ private:
   const static char kSnack = '-';
   const static char kPowerUp = 'U';
   const static size_t kTempWallDuration = 10;
-
 };
-}
 
-#ifndef FINAL_PROJECT_ANANYAA7_PACMAN_MAP_H
-#define FINAL_PROJECT_ANANYAA7_PACMAN_MAP_H
+} // namespace PacmanGame
 
-#endif // PACMAN_MAP_H
+#ifndef FINAL_PROJECT_ANANYAA7_PACMAN_PACMAN_H
+#define FINAL_PROJECT_ANANYAA7_PACMAN_PACMAN_H
+
+#endif // FINAL_PROJECT_ANANYAA7_PACMAN_PACMAN_H

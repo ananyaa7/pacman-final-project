@@ -9,6 +9,9 @@ void Map::LoadInMap(const std::string &map) {
   std::string line;
   size_t row = 0;
   size_t scaled_row = 0;
+  std::getline(map_loader, line);
+  std::cout<<map;
+  std::cout<<line;
 
   // Read in the lines from the file
   while (std::getline(map_loader, line)) {
@@ -84,7 +87,9 @@ void Map::LoadInMap(const std::string &map) {
     row++;
     scaled_row += kLoopingFactor;
   }
+
 }
+
 
 void Map::DrawMap(const TimePoint& begin_time) {
   for (Wall& wall : walls_) {
@@ -136,4 +141,5 @@ const std::vector<Wall> &Map::GetTempWalls() const {
 std::vector<std::vector<char>> &Map::GetMapTiles() {
   return map_tiles_;
 }
-}
+
+} // namespace PacmanGame

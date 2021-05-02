@@ -28,8 +28,3 @@ private:
 };
 
 } // namespace PacmanGame
-
-#ifndef FINAL_PROJECT_ANANYAA7_PACMAN_POWER_UP_H
-#define FINAL_PROJECT_ANANYAA7_PACMAN_POWER_UP_H
-
-#endif // PACMAN_POWER_UP_H

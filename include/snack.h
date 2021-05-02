@@ -1,6 +1,3 @@
-//
-// Created by ANANYA AGARWAL on 24/04/21.
-//
 #pragma once
 #include "cinder/gl/gl.h"
 #include "cinder/app/App.h"
@@ -26,7 +23,3 @@ private:
 };
 
 } // namespace PacmanGame
-#ifndef FINAL_PROJECT_ANANYAA7_PACMAN_SNACK_H
-#define FINAL_PROJECT_ANANYAA7_PACMAN_SNACK_H
-
-#endif // PACMAN_SNACK_H

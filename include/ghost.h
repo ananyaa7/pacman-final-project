@@ -51,12 +51,19 @@ public:
   const glm::vec2 &GetPosition() const;
   const std::pair<size_t, size_t> &GetGhostCoordinates() const;
 
+  enum State {
+    SCATTER, CHASE, FRIGHTEN
+  };
+
+  void SetState(const State& state);
 
   enum Move {
     UP, DOWN, RIGHT, LEFT
   };
 
   void SetSize(double size);
+
+  State GetState() const;
 
 private:
   char name_;
@@ -65,7 +72,10 @@ private:
   Coordinates ghost_coordinates_;
   Coordinates initial_ghost_coordinates_;
   ci::Color color_;
+  ci::Color normal_color_;
+  ci::Color frighten_color_;
   TimePoint begin_time_;
+  State state_;
   Move last_move_;
   size_t update_count_;
   double size_;
@@ -104,9 +114,23 @@ private:
    */
   void MoveRight();
 
+  /**
+   * Scatters the movement of the ghost
+   */
+  void Scatter(const std::vector<std::vector<char>>& map_tiles);
 
   /**
-   * Finds a path to a certain coordinate
+   * Chases Pacman
+   * @param pacman_location the location of Pacman
+   */
+  void Chase(const std::vector<std::vector<char>>& map_tiles, const
+  Coordinates& pacman_coordinates);
+
+  void Frighten(const std::vector<std::vector<char>>& map_tiles);
+
+
+  /**
+   * Finds a path to a certain coordinate using breadth first search
    * @param map_tiles the 2d array of map tiles
    * @param destination the coordinates of the destination
    * @return a vector of coordinates that represents the path to the destination
@@ -119,7 +143,7 @@ private:
    * ghost's location and reverses it
    * @param prev the 2d vector of the previous coordinates before the step is
    * made
-   * @param destination - destination of the ghost
+   * @param destination the destination of the ghost
    * @return a vector of coordinates that represents the path to the destination
    */
   std::vector<Coordinates> ReconstructPath(const
@@ -129,7 +153,3 @@ private:
 
 } // namespace PacmanGame
 
-#ifndef FINAL_PROJECT_ANANYAA7_PACMAN_GHOST_H
-#define FINAL_PROJECT_ANANYAA7_PACMAN_GHOST_H
-
-#endif // FINAL_PROJECT_ANANYAA7_PACMAN_GHOST_H

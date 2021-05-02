@@ -7,11 +7,14 @@ namespace PacmanGame {
 Ghost::Ghost(const glm::vec2 &position, const std::string& color, char name) {
   name_ = name;
   initial_position_ = position;
-  color_ = ci::Color("purple");
+  normal_color_ = ci::Color(color.c_str());
+  frighten_color_ = ci::Color("blue");
   begin_time_ = std::chrono::system_clock::now();
+  state_ = CHASE;
   update_count_ = 0;
   last_move_ = LEFT;
   size_ = Map::kWindowHeight / 60;
+  color_ = normal_color_;
   position_ = initial_position_;
 }
 
@@ -58,6 +61,9 @@ void Ghost::DrawEyes() {
   ci::gl::drawSolidCircle(left_eye_location, eye_size);
   ci::gl::drawSolidCircle(right_eye_location, eye_size);
 
+  if (color_ != frighten_color_) {
+    DrawPupils();
+  }
 }
 
 void Ghost::DrawPupils() {
@@ -133,16 +139,138 @@ Coordinates& pacman_coordinates, const Map& map) {
     return;
   }
 
+  if (state_ == FRIGHTEN) {
+    Frighten(map_tiles);
+    return;
+  }
 
   // Get the current runtime duration of program to determine ghost state
   auto end_time = std::chrono::system_clock::now();
   std::chrono::duration<double> elapsed_time = end_time - begin_time_;
+
+  // Every 10 seconds the ghosts are in the CHASE state where they chase Pacman
+  if ((int) (elapsed_time.count()) % 10 == 0) {
+    state_ = CHASE;
+
+    // Every 25 seconds the ghosts are in the SCATTER state where the ghosts
+    // move to a corner
+  } else if ((int) (elapsed_time.count()) % 25 == 0) {
+    state_ = SCATTER;
+  }
 
   // Don't do anything while the temporary walls are still there
   if (!(map.GetTempWalls().empty())) {
     return;
   }
 
+  // Change back to their normal color if they were still in their frightened
+  // color
+  if (color_ == frighten_color_) {
+    color_ = normal_color_;
+  }
+
+  if (state_ == SCATTER) {
+    Scatter(map_tiles);
+
+  } else {
+    Chase(map_tiles, pacman_coordinates);
+  }
+}
+
+void Ghost::Scatter(const std::vector<std::vector<char>>& map_tiles) {
+  Coordinates corner_coordinates;
+
+  // We send the ghosts to different corners depending on their name
+  if (name_ == Map::kBlinky) {
+    corner_coordinates = Coordinates(1, 1);
+  } else if (name_ == Map::kInky) {
+    corner_coordinates = Coordinates(19, 31);
+  } else if (name_ == Map::kClyde) {
+    corner_coordinates = Coordinates(1, 31);
+  }
+
+  // Get the path to their corner
+  std::vector<Coordinates> path_to_corner = FindPathToTile(map_tiles, corner_coordinates);
+
+  // If they are already there, just return and don't do anything
+  if (path_to_corner.size() == 1) {
+    return;
+  }
+
+  // Moves the ghost to the next tile in the path
+  Coordinates next_tile = path_to_corner[1];
+
+  // Checks which direction to actually move depending on the x and y coordinate
+  if (next_tile.first > ghost_coordinates_.first) {
+    MoveDown();
+
+  } else if (next_tile.first < ghost_coordinates_.first) {
+    MoveUp();
+
+  } else if (next_tile.second > ghost_coordinates_.second) {
+    MoveRight();
+
+  } else if (next_tile.second < ghost_coordinates_.second) {
+    MoveLeft();
+  }
+}
+
+void Ghost::Chase(const std::vector<std::vector<char>>& map_tiles, const
+Coordinates& pacman_coordinates) {
+
+  // Get the path to Pacman
+  std::vector<Coordinates> path_to_pacman = FindPathToTile
+      (map_tiles, pacman_coordinates);
+
+  // If path is empty, then that means the ghost has reached Pacman so we
+  // don't do anything
+  if (path_to_pacman.empty()) {
+    return;
+  }
+
+  Coordinates next_tile = path_to_pacman[1];
+
+  if (next_tile.first > ghost_coordinates_.first) {
+    MoveDown();
+
+  } else if (next_tile.first < ghost_coordinates_.first) {
+    MoveUp();
+
+  } else if (next_tile.second > ghost_coordinates_.second) {
+    MoveRight();
+
+  } else if (next_tile.second < ghost_coordinates_.second) {
+    MoveLeft();
+  }
+}
+
+void Ghost::Frighten(const std::vector<std::vector<char>> &map_tiles) {
+  color_ = ci::Color("blue");
+  // Get the path to their initial coordinates
+  std::vector<Coordinates> path_to_beginning = FindPathToTile(map_tiles,
+                                                              initial_ghost_coordinates_);
+
+  // If they are already there, just return and don't do anything
+  if (path_to_beginning.size() == 1) {
+    return;
+  }
+
+  // Moves the ghost to the next tile in the path
+  Coordinates next_tile = path_to_beginning[1];
+
+  // Checks which direction to actually move depending on the x and y coordinate
+  if (next_tile.first > ghost_coordinates_.first) {
+    MoveDown();
+
+  } else if (next_tile.first < ghost_coordinates_.first) {
+    MoveUp();
+
+  } else if (next_tile.second > ghost_coordinates_.second) {
+    MoveRight();
+
+  } else if (next_tile.second < ghost_coordinates_.second) {
+    MoveLeft();
+  }
 }
 
 void Ghost::MoveUp() {
@@ -172,7 +300,7 @@ void Ghost::MoveLeft() {
 std::vector<Coordinates> Ghost::FindPathToTile(const
                                                std::vector<std::vector<char>>& map_tiles, const Coordinates& destination) {
 
-  // Initialize a queue which is a 2d array of visited tiles initially set to false,
+  // Initialize a queue, a 2d array of visited tiles initially set to false,
   // and a 2d array of Coordinates that represent the previous Coordinate
   // made to reach the next coordinate in the 2d map for doing breadth first
   // search
@@ -276,12 +404,16 @@ std::vector<Coordinates> Ghost::ReconstructPath(const
 void Ghost::Respawn() {
   ghost_coordinates_ = initial_ghost_coordinates_;
   position_ = initial_position_;
+  color_ = normal_color_;
+  state_ = CHASE;
 }
 
 const glm::vec2 &Ghost::GetPosition() const {
   return position_;
 }
-
+void Ghost::SetState(const State& state) {
+  state_ = state;
+}
 const Coordinates &Ghost::GetGhostCoordinates() const {
   return ghost_coordinates_;
 }
@@ -290,5 +422,8 @@ void Ghost::SetSize(double size) {
   size_ = size;
 }
 
+Ghost::State Ghost::GetState() const {
+  return state_;
+}
 
 } // namespace PacmanGame

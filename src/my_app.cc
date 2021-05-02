@@ -20,7 +20,11 @@ void PacmanApp::draw() {
         ci::Color("white"), ci::Font("Arial", 50));
 
   } else {
-    return;
+
+    // Set what the game over screen is going to be depending on if you lost
+    // or won
+    game_over_screen_.SetState(pacman_engine_.GetGameState());
+    game_over_screen_.Draw();
   }
 }
 void PacmanApp::update() {

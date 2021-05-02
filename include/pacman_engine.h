@@ -19,13 +19,13 @@ public:
   PacmanEngine();
 
   /**
-   * Draws the game
+   * Draws the game including all the elements
    */
   void DrawGame();
 
   /**
    * Sets up the game by loading in the map
-   * @param map - the path to the map
+   * @param map the path to the map
    */
   void SetUpGame(const std::string& map);
 
@@ -132,6 +132,10 @@ private:
    */
   void RespawnPacman();
 
+  /**
+   * Scatters the ghosts
+   */
+  void ScatterGhosts();
 
   /**
    * Updates the DEAD/ALIVE state and NORMAL/POWERED UP state of Pacman
@@ -139,9 +143,4 @@ private:
   void UpdatePacmanState();
 };
 
-} // namespace PacmanGame
-
-#ifndef FINAL_PROJECT_ANANYAA7_PACMAN_PACMAN_ENGINE_H
-#define FINAL_PROJECT_ANANYAA7_PACMAN_PACMAN_ENGINE_H
-
-#endif // FINAL_PROJECT_ANANYAA7_PACMAN_PACMAN_ENGINE_H
+} // namespace PacmanGam

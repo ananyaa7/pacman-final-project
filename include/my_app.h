@@ -7,8 +7,9 @@
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
-#include "pacman_engine.h"
+#include "game_over.h"
 #include "ghost.h"
+#include "pacman_engine.h"
 
 namespace PacmanGame {
 
@@ -23,10 +24,10 @@ public:
 
 private:
   PacmanEngine pacman_engine_;
+  GameOverScreen game_over_screen_;
   const std::string kMapPath = "map.txt";
 };
 
 } // namespace PacmanGame
-
 
 #endif // FINAL_PROJECT_ANANYAA7_MY_APP_H
