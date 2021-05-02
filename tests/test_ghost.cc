@@ -6,7 +6,7 @@ using namespace PacmanGame;
 
 TEST_CASE("Update successfully updates the position of the ghosts") {
   PacmanEngine pacman_engine;
-  pacman_engine.SetUpGame("map.txt");
+  pacman_engine.SetUpGame("/Users/ananyaagarwal/Desktop/cinder_0.9.2_mac/my_projects/final-project-ananyaa7/tests/test_map.txt");
   Map map = pacman_engine.GetMap();
 
   std::vector<Ghost> ghosts = pacman_engine.GetGhosts();

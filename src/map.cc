@@ -10,8 +10,8 @@ void Map::LoadInMap(const std::string &map) {
   size_t row = 0;
   size_t scaled_row = 0;
   std::getline(map_loader, line);
-  std::cout<<map;
-  std::cout<<line;
+  std::cout<<line<<std::endl;
+  //std::cout<<line;
 
   // Read in the lines from the file
   while (std::getline(map_loader, line)) {

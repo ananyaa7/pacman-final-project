@@ -31,7 +31,7 @@ public:
   void DrawMap(const TimePoint& begin_time);
 
   // Constants for the GUI window size
-  const static size_t kWindowHeight = 750;
+  const static size_t kWindowHeight = 650;
   const static size_t kWindowWidth = 1400;
 
   const std::vector<Wall> &GetWalls() const;
@@ -63,8 +63,8 @@ private:
   std::vector<glm::vec2> ghost_locations_;
 
   // This constant scales the size and placement of the walls
-  const static int kScalingFactor = (int) kWindowWidth / 70;
-  const int kLoopingFactor = kScalingFactor / 10;
+  const static int kScalingFactor = 20;
+  const int kLoopingFactor = 2;
 
 
   // These constants represent the chars used for walls, snacks etc. from the

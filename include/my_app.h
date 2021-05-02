@@ -25,7 +25,7 @@ public:
 private:
   PacmanEngine pacman_engine_;
   GameOverScreen game_over_screen_;
-  const std::string kMapPath = "map.txt";
+  const std::string kMapPath = "/Users/ananyaagarwal/Desktop/cinder_0.9.2_mac/my_projects/final-project-ananyaa7/map.txt";
 };
 
 } // namespace PacmanGame
