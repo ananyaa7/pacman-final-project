@@ -11,8 +11,8 @@ const glm::vec2& Snack::GetPosition() const {
 }
 
 void Snack::Draw() {
-  ci::gl::color(ci::Color("white"));
-  ci::gl::drawSolidCircle(position_, kRadius);
+  ci::gl::color(ci::Color("green"));
+  ci::gl::drawSolidCircle(position_, kSnack_Radius);
 }
 
 } // namespace PacmanGame

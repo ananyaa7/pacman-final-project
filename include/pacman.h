@@ -6,14 +6,13 @@
 
 namespace PacmanGame {
 
-// Used to get the time while running the application
 typedef std::chrono::time_point<std::chrono::system_clock> TimePoint;
 
 class Pacman {
 public:
 
   /**
-   * Constructs an instance of Pacman
+   * default constructor for Pacman class
    */
   Pacman();
 
@@ -22,14 +21,13 @@ public:
    */
   void Draw();
 
-  /**
-   * These methods move Pacman
-   */
+  //functions to move pacman
   void MoveUp();
   void MoveDown();
   void MoveLeft();
   void MoveRight();
 
+  //getters and setters for pacman
   void SetPosition(const glm::vec2 &position);
   const glm::vec2 &GetPosition() const;
   double GetRadius() const;

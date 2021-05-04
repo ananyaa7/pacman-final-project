@@ -7,33 +7,35 @@ PacmanApp::PacmanApp() {
 }
 
 void PacmanApp::draw() {
-  ci::Color8u background_color(0, 0, 0);  // black
+  ci::Color8u background_color(0, 0, 0);  // This is for black bg
   ci::gl::clear(background_color);
 
-  // If the game state is at its END, then we draw the game over screen.
-  // Else, we continue drawing the game
+  // if the game state is active we draw the game otherwise we draw game over screen
   if (pacman_engine_.GetGameState() == PacmanEngine::GameState::ACTIVE) {
     pacman_engine_.DrawGame();
     ci::gl::drawStringCentered(
         "Score: " + std::to_string(pacman_engine_.GetScore()),
         glm::vec2(Map::kWindowWidth * .7, Map::kWindowHeight * .1),
-        ci::Color("white"), ci::Font("Arial", 50));
+        ci::Color("white"), ci::Font("Arial", 40));
 
   } else {
 
-    // Set what the game over screen is going to be depending on if you lost
-    // or won
+    // displays game over screen based on whether you have lost or won
     game_over_screen_.SetState(pacman_engine_.GetGameState());
     game_over_screen_.Draw();
   }
 }
 void PacmanApp::update() {
-  // If the game is over, we stop updating the game
+  // keep uppdating the game while the state is active
   if (pacman_engine_.GetGameState() == PacmanEngine::GameState::ACTIVE) {
     pacman_engine_.UpdateGame();
   } else {
     return;
   }
+}
+
+void PacmanApp::setup() {
+  pacman_engine_.SetUpGame(kMapPath);
 }
 
 void PacmanApp::keyDown(ci::app::KeyEvent event) {
@@ -54,12 +56,10 @@ void PacmanApp::keyDown(ci::app::KeyEvent event) {
     pacman_engine_.MovePacman("down");
     break;
 
-  case ci::app::KeyEvent::KEY_q:
+  case ci::app::KeyEvent::KEY_ESCAPE:
     std::exit(0);
   }
 }
-void PacmanApp::setup() {
-  pacman_engine_.SetUpGame(kMapPath);
-}
+
 
 } // namespace PacmanGame

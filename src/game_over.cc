@@ -19,12 +19,12 @@ GameOverScreen::GameOverScreen() {
 
 void GameOverScreen::Draw() {
   ci::gl::drawStringCentered(
-      message_,
+      display_text_,
       glm::vec2(Map::kWindowWidth * .5, Map::kWindowHeight * .65),
       ci::Color("white"), ci::Font("Arial", 60));
 
   ci::gl::drawStringCentered(
-      "Press Q to quit!",
+      "Press esc to quit!",
       glm::vec2(Map::kWindowWidth * .5, Map::kWindowHeight * .75),
       ci::Color("white"), ci::Font("Arial", 60));
 
@@ -36,11 +36,11 @@ void GameOverScreen::Draw() {
 void GameOverScreen::SetState(PacmanEngine::GameState state) {
   state_ = state;
 
-  // Change the message depending on what the game state is after the game
+  // Change the message depending on state of the game
   if (state_ == PacmanEngine::END) {
-    message_ = "Game over!";
+    display_text_ = "Oh no! Game over!";
   } else {
-    message_ = "You won!";
+    display_text_ = "Congrats! You won!";
   }
 }
 

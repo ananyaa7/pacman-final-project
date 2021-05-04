@@ -18,7 +18,7 @@ void PacmanEngine::SetUpGame(const std::string& map) {
   // Create ghosts based on their locations and color
   for (size_t i = 0; i < ghost_locations.size(); i++) {
     ghosts_.emplace_back(ghost_locations[i], kGhostColors[i], kGhostNames[i]);
-    ghosts_[i].GetInitialGhostCoordinates(map_.GetMapTiles());
+    ghosts_[i].GetStartingGhostCoordinates(map_.GetMapTiles());
   }
 
   // Get the map tiles and store it
@@ -249,7 +249,7 @@ bool PacmanEngine::HasEatenSnack() {
     // the sum of the two radii. If they are, then Pacman has eaten it and we
     // erase it from the vector of snacks
     if (glm::distance(all_snacks[i].GetPosition(), curr_pos) <=
-        Snack::kRadius + pacman_.GetRadius()) {
+        Snack::kSnack_Radius + pacman_.GetRadius()) {
       all_snacks.erase(all_snacks.begin() + i);
       return true;
     }
@@ -263,7 +263,7 @@ bool PacmanEngine::HasEatenPowerUp() {
 
   for (size_t i = 0; i < all_power_ups.size(); i++) {
     if (glm::distance(all_power_ups[i].GetPosition(), curr_pos) <=
-        Snack::kRadius + pacman_.GetRadius()) {
+        Snack::kSnack_Radius + pacman_.GetRadius()) {
       all_power_ups.erase(all_power_ups.begin() + i);
       return true;
     }

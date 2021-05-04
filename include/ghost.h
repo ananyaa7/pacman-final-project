@@ -15,10 +15,10 @@ class Ghost {
 public:
 
   /**
-   * Constructs an instance of the ghost given its position
+   * constructor for ghost class
    * @param position the position of the ghost on the map
    * @param color the color of the ghost
-   * @param name the first letter of the name of the ghost
+   * @param name the first letter of the name
    */
   Ghost(const glm::vec2 &position, const std::string& color, char name);
 
@@ -29,24 +29,24 @@ public:
 
   /**
    * Updates the position of the ghost
-   * @param map_tiles the 2d array of the map tiles
-   * @param pacman_location the location of Pacman
-   * @param map the map of the game
+   * @param map_bricks the 2d array of the bricks of the map
+   * @param pacman_location gives pacman location
+   * @param map loads the map for the game
    */
-  void Update(const std::vector<std::vector<char>>& map_tiles, const
+  void Update(const std::vector<std::vector<char>>& map_bricks, const
   Coordinates& pacman_coordinates, const Map& map);
-
-  /**
-   * Gets the initial coordinates of the ghost
-   * @param map_tiles the 2d array of the map tiles
-   */
-  void GetInitialGhostCoordinates(const std::vector<std::vector<char>>
-                                  &map_tiles);
 
   /**
   * Respawns the ghost back to its initial coordinates
   */
   void Respawn();
+
+  /**
+   * Gets the starting coordinates of the ghost
+   * @param map_tiles the 2d array of the map tiles
+   */
+  void GetStartingGhostCoordinates(const std::vector<std::vector<char>>
+                                  &map_tiles);
 
   const glm::vec2 &GetPosition() const;
   const std::pair<size_t, size_t> &GetGhostCoordinates() const;
@@ -57,42 +57,26 @@ public:
 
   void SetState(const State& state);
 
+  State GetState() const;
+
   enum Move {
     UP, DOWN, RIGHT, LEFT
   };
 
   void SetSize(double size);
 
-  State GetState() const;
 
 private:
-  char name_;
-  glm::vec2 initial_position_;
-  glm::vec2 position_;
-  Coordinates ghost_coordinates_;
-  Coordinates initial_ghost_coordinates_;
-  ci::Color color_;
-  ci::Color normal_color_;
-  ci::Color frighten_color_;
-  TimePoint begin_time_;
-  State state_;
-  Move last_move_;
-  size_t update_count_;
-  double size_;
 
-  // Modify these constants to change the speed of the ghosts
-  constexpr static double kSpeed = 40;
+  /**
+   * draws the pupil of the ghost(similar to pacman mouth)
+   */
+  void DrawPupils();
 
   /**
    * Draws the eyes of the ghost
    */
   void DrawEyes();
-
-  /**
-   * Gets the neighboring position vectors surrounding the ghost
-   * @return a map of the move and the neighboring position vector
-   */
-  std::vector<Coordinates> GetNeighbors(const Coordinates& coordinates);
 
   /**
    * Moves the ghost up
@@ -126,29 +110,52 @@ private:
   void Chase(const std::vector<std::vector<char>>& map_tiles, const
   Coordinates& pacman_coordinates);
 
+    /**
+     * frightened state of ghost
+     */
   void Frighten(const std::vector<std::vector<char>>& map_tiles);
+
+  /**
+   * Gets the neighboring position vectors surrounding the ghost
+   * @return a map of the move and the neighboring position vector
+   */
+  std::vector<Coordinates> GetNeighbors(const Coordinates& coordinates);
 
 
   /**
-   * Finds a path to a certain coordinate using breadth first search
-   * @param map_tiles the 2d array of map tiles
+   * finds path to a certain wall brick
+   * @param map_bricks the 2d array of bricks of map
    * @param destination the coordinates of the destination
    * @return a vector of coordinates that represents the path to the destination
    */
-  std::vector<Coordinates> FindPathToTile(const std::vector<std::vector<char>>&
-  map_tiles, const Coordinates& destination);
+  std::vector<Coordinates> FindPathToBrick(const std::vector<std::vector<char>>&
+  map_bricks, const Coordinates& destination);
 
   /**
-   * Reconstructs the path to the destination from the destination to the
-   * ghost's location and reverses it
-   * @param prev the 2d vector of the previous coordinates before the step is
+   * constructs the path from the ghost to pacman
+   * @param prev_coord the 2d vector of the previous coordinates before the step is
    * made
    * @param destination the destination of the ghost
    * @return a vector of coordinates that represents the path to the destination
    */
-  std::vector<Coordinates> ReconstructPath(const
-                                           std::vector<std::vector<Coordinates>>& prev, const Coordinates& destination);
-  void DrawPupils();
+  std::vector<Coordinates> ConstructPath(const
+                                           std::vector<std::vector<Coordinates>>& prev_coord, const Coordinates& destination);
+
+
+  char name_;
+  State state_;
+  Move last_move_;
+  size_t update_count_;
+  glm::vec2 starting_position_;
+  glm::vec2 position_;
+  Coordinates ghost_coordinates_;
+  Coordinates starting_ghost_coordinates_;
+  ci::Color color_;
+  ci::Color normal_color_;
+  ci::Color frighten_color_;
+  TimePoint begin_time_;
+  double size_;
+  constexpr static double kGhost_Speed = 40;
 };
 
 } // namespace PacmanGame

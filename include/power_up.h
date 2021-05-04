@@ -8,7 +8,7 @@ namespace PacmanGame {
 class PowerUp {
 public:
   /**
-   * Constructs a power up given a position
+   * constructor for the power up class
    * @param position the position of the power up
    */
   PowerUp(const glm::vec2 &position);
@@ -18,11 +18,16 @@ public:
    */
   void Draw();
 
+  /**
+   * getter for the power up position
+   * @return the position for the power up snack
+   */
   const glm::vec2 &GetPosition() const;
 
 private:
   glm::vec2 position_;
 
+  //needs to be bigger than the normal snack
   const static size_t kRadius = 6;
 
 };

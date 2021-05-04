@@ -10,6 +10,9 @@ namespace PacmanGame {
 
 class GameOverScreen {
 public:
+  /**
+   * default constructor for GamOverScreen
+   */
   GameOverScreen();
 
   /**
@@ -17,18 +20,19 @@ public:
    */
   void Draw();
 
+  /**
+   * Function to set the state of the game
+   */
   void SetState(PacmanEngine::GameState state);
 
 private:
   Pacman pacman_;
   std::vector<Ghost> ghosts_;
   PacmanEngine::GameState state_;
-  std::string message_;
+  std::string display_text_;
 
-  // Change this constant if you want different colored ghosts
   const std::vector<std::string> kGhostColors = {"red", "purple", "orange"};
 
-  // These constants are the first letter of the ghosts' names
   const std::vector<char> kGhostNames = {'B', 'I', 'C'};
 
 

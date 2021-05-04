@@ -15,8 +15,12 @@ namespace PacmanGame {
 
 class PacmanApp : public ci::app::App {
 public:
+  /**
+   * default constructor for pacman class
+   */
   PacmanApp();
 
+  //override functions
   void draw() override;
   void update() override;
   void setup() override;

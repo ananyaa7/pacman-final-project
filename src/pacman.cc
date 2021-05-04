@@ -9,20 +9,19 @@ Pacman::Pacman() {
   state_ = NORMAL;
 }
 
+//figured how to draw pacman from youtube
 void Pacman::Draw() {
   ci::gl::color(ci::Color("yellow"));
   ci::gl::drawSolidCircle(position_, radius_);
   ci::gl::color(ci::Color("black"));
 
-  // Gets the elapsed time of the program to draw the biting animation for
-  // Pacman
+  //gets the time that has passed to draw the pacman
   auto end_time = std::chrono::system_clock::now();
   std::chrono::duration<double> duration = end_time - begin_time_;
   size_t elapsed_time = duration.count() * 10;
   size_t scaling_factor = elapsed_time % ((int) radius_ / 2);
 
-  // Gets the direction of Pacman and draws a black triangle tha represents
-  // the mouth of Pacman
+  // draws the black triangle(mouth) of the pacman accoriding to the direction
   switch (direction_) {
   case UP: {
     glm::vec2 pt2 = glm::vec2(position_.x - scaling_factor, position_.y - radius_);
