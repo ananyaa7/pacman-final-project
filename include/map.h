@@ -35,7 +35,7 @@ public:
   const static size_t kWindowWidth = 1300;
 
   const std::vector<Wall> &GetWalls() const;
-  std::vector<std::vector<char>> &GetMapTiles();
+  std::vector<std::vector<char>> &GetMapBricks();
 
   // The only reason why these getters aren't constant is because we want to
   // erase the snacks and power ups that Pacman has eaten
@@ -54,7 +54,7 @@ public:
   const static char kPacman = 'P';
 
 private:
-  std::vector<std::vector<char>> map_tiles_;
+  std::vector<std::vector<char>> map_bricks_;
   glm::vec2 pacman_location_;
   std::vector<Wall> walls_;
   std::vector<Wall> temp_walls_;

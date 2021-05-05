@@ -14,20 +14,14 @@ class PacmanEngine {
 public:
 
   /**
-   * Constructs an instance of the Pacman engine
+   * Default constructor for the engine class
    */
   PacmanEngine();
 
   /**
-   * Draws the game including all the elements
+   * to draw the game
    */
   void DrawGame();
-
-  /**
-   * Sets up the game by loading in the map
-   * @param map the path to the map
-   */
-  void SetUpGame(const std::string& map);
 
   /**
    * Moves Pacman
@@ -36,96 +30,96 @@ public:
   void MovePacman(const std::string& direction);
 
   /**
+   * Sets up the game by loading in the map
+   * @param map the path to the map
+   */
+  void SetUpGame(const std::string& map);
+
+  /**
   * Updates the state of the game
   */
   void UpdateGame();
 
   size_t GetScore() const;
   const Map &GetMap() const;
-  const Pacman &GetPacman() const;
   const std::vector<Ghost> &GetGhosts() const;
-  const std::pair<size_t, size_t> &GetPacmanCoordinates() const;
 
-  // Change this constant if you want different colored ghosts
   const std::vector<std::string> kGhostColors = {"red", "purple", "orange"};
-
-  // These constants are the first letter of the ghosts' names
   const std::vector<char> kGhostNames = {'B', 'I', 'C'};
 
   enum GameState {ACTIVE, END, WON};
   enum PacmanState {ALIVE, DEAD};
 
   GameState GetGameState() const;
-  const size_t &GetLives() const;
-  PacmanState GetPacmanState() const;
 
 private:
   Pacman pacman_;
   PacmanState pacman_state_;
   Coordinates pacman_coordinates_;
-  Coordinates initial_pacman_coordinates_;
-  std::vector<std::vector<char>> map_tiles_;
-  std::vector<Ghost> ghosts_;
   Map map_;
   TimePoint begin_time_;
   size_t score_;
+  Coordinates starting_pacman_coordinates_;
+  std::vector<std::vector<char>> map_bricks_;
+  std::vector<Ghost> ghosts_;
   size_t lives_;
   GameState game_state_;
 
-  // Duration of Pacman's power up
+  //hpw long the power up will last
   const static size_t kPowerUpDuration = 5;
 
-  // Draws the number of lives you have left
+  /**
+  * Gets the starting coordinates of Pacman
+  */
+  void GetStartingPacmanCoordinates();
+
+  /**
+   * checks for collision with wall above pacman
+   * @return bool for true/false collision
+   */
+  bool IsUpWallCollision();
+
+  /**
+   * checks for collision with wall below pacman
+   * @return bool for true/false collision
+   */
+  bool IsDownWallCollision();
+
+  /**
+   * checks for collision with wall left to pacman
+   * @return bool for true/false collision
+   */
+  bool IsLeftWallCollision();
+
+  /**
+   * checks for collision with wall right to pacman
+   * @return bool for true/false collision
+   */
+  bool IsRightWallCollision();
+
+  /**
+   * displays the number of lives
+   */
   void DrawLives() const;
 
   /**
-   * Checks if there is a collision with any walls "above" Pacman
-   * @return a bool on whether or not there is a collision
-   */
-  bool IsUpCollision();
-
-  /**
-   * Checks if there is a collision with any walls "below" Pacman
-   * @return a bool on whether or not there is a collision
-   */
-  bool IsDownCollision();
-
-  /**
-   * Checks if there is a collision with any walls "left" of Pacman
-   * @return a bool on whether or not there is a collision
-   */
-  bool IsLeftCollision();
-
-  /**
-   * Checks if there is a collision with any walls "right" of Pacman
-   * @return a bool on whether or not there is a collision
-   */
-  bool IsRightCollision();
-
-
-  /**
    * Checks if Pacman has eaten a snack
-   * @return a bool on whether or not Pacman ate a snack while moving
+   * @return a bool for true/false snack eaten
    */
   bool HasEatenSnack();
 
   /**
    * Checks if Pacman has eaten a power up
-   * @return a bool on whether or not Pacman ate a power up while moving
+   * @return bool for true/false power up eaten
    */
   bool HasEatenPowerUp();
 
   /**
-   * Gets the initial coordinates of Pacman
-   */
-  void GetInitialPacmanCoordinates();
-
-  /**
    * Checks if Pacman has died
    * @param ghost the ghost in the map
-   * @return a bool on whether Pacman has died
+   * @return bool for true/false alive pacman
    */
-  bool HasDied(const Ghost &ghost);
+  bool HasPacmanDied(const Ghost &ghost);
 
   /**
    * Respawns Pacman back at its initial location
@@ -133,14 +127,15 @@ private:
   void RespawnPacman();
 
   /**
+  * Updates the DEAD/ALIVE state and NORMAL/POWERED UP state of Pacman
+  */
+  void UpdatePacmanState();
+
+  /**
    * Scatters the ghosts
    */
   void ScatterGhosts();
 
-  /**
-   * Updates the DEAD/ALIVE state and NORMAL/POWERED UP state of Pacman
-   */
-  void UpdatePacmanState();
 };
 
 } // namespace PacmanGam

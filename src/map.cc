@@ -17,12 +17,12 @@ void Map::LoadInMap(const std::string &map) {
   while (std::getline(map_loader, line)) {
 
     // Create a vector of chars
-    map_tiles_.emplace_back();
+    map_bricks_.emplace_back();
     for (size_t column = 0, scaled_column = 0;
          column < line.size(); column++, scaled_column += kLoopingFactor) {
 
       // Push back onto that vector the line of chars
-      map_tiles_[row].push_back(line.at(column));
+      map_bricks_[row].push_back(line.at(column));
 
       // Find placement of a drawn structure based on what column and row we
       // are at in the map txt file
@@ -138,8 +138,8 @@ std::vector<PowerUp> &Map::GetPowerUps() {
 const std::vector<Wall> &Map::GetTempWalls() const {
   return temp_walls_;
 }
-std::vector<std::vector<char>> &Map::GetMapTiles() {
-  return map_tiles_;
+std::vector<std::vector<char>> &Map::GetMapBricks() {
+  return map_bricks_;
 }
 
 } // namespace PacmanGame
